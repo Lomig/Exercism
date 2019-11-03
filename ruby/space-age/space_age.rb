@@ -3,39 +3,24 @@
 # Exercism exercise
 # Give the age of someone in planet-years
 class SpaceAge
+  REVOLUTION_PER_YEAR = {
+    earth: 1,
+    mercury: 0.2408467,
+    venus: 0.61519726,
+    mars: 1.8808158,
+    jupiter: 11.862615,
+    saturn: 29.447498,
+    uranus: 84.016846,
+    neptune: 164.79132,
+  }.freeze
+
   def initialize(age_in_seconds)
-    @age_on_earth = age_in_seconds / 31_557_600.0
+    @age_on_earth = (age_in_seconds / 31_557_600.0)
   end
 
-  def on_earth
-    @age_on_earth.round(2)
-  end
-
-  def on_mercury
-    (@age_on_earth / 0.2408467).round(2)
-  end
-
-  def on_venus
-    (@age_on_earth / 0.61519726).round(2)
-  end
-
-  def on_mars
-    (@age_on_earth / 1.8808158).round(2)
-  end
-
-  def on_jupiter
-    (@age_on_earth / 11.862615).round(2)
-  end
-
-  def on_saturn
-    (@age_on_earth / 29.447498).round(2)
-  end
-
-  def on_uranus
-    (@age_on_earth / 84.016846).round(2)
-  end
-
-  def on_neptune
-    (@age_on_earth / 164.79132).round(2)
+  REVOLUTION_PER_YEAR.each do |planet, revolution_period|
+    define_method(["on_", planet].join) do
+      (@age_on_earth / revolution_period).round(2)
+    end
   end
 end
