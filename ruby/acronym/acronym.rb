@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # Exercism exercise
-# Create an acronym from any string
+# Create an acronym from any phrase
 module Acronym
-  def self.abbreviate(string)
-    string.scan(/\b\w/).join.upcase
+  def self.abbreviate(phrase)
+    phrase.scan(/\b\w/).join.upcase
   end
 end
