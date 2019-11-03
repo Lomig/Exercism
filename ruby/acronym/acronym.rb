@@ -1,7 +1,9 @@
-module Acronym
-  def self.abbreviate string
-    words = string.split(/\W+/)
+# frozen_string_literal: true
 
-    words.map { |word| word.chr }.join.upcase
+# Exercism exercise
+# Create an acronym from any string
+module Acronym
+  def self.abbreviate(string)
+    string.scan(/\b\w/).join.upcase
   end
 end
