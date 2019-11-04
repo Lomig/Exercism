@@ -4,19 +4,9 @@ pub fn build_proverb(list: &[&str]) -> String {
     };
 
     let song: Vec<String> = list
-        .iter()
-        .enumerate()
-        .fold(vec![], |verses, (index, word)| {
-            if index == 0 {
-                return verses;
-            };
-
-            [
-                verses,
-                vec![format!("For want of a {} the {} was lost.", list[index - 1], word)],
-            ]
-            .concat()
-        });
+        .windows(2)
+        .map(|tuple| { format!("For want of a {} the {} was lost.", tuple[0], tuple[1]) })
+        .collect::<Vec<String>>();
 
     [
         song,
