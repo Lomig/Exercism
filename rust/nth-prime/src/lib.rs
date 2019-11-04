@@ -23,17 +23,10 @@ fn seek_next_prime(number: &u32) -> u32 {
 }
 
 fn is_prime(n: &u32) -> bool {
-    if *n == 2 {
-        return true;
-    };
+    let square = 1 + (*n as f32).sqrt() as u32;
 
-    let square = (*n as f32).sqrt() as u32;
-
-    for diviser in 2..(square + 1) {
-        if *n % diviser == 0 {
-            return false;
-        };
+    match *n {
+        2 => true,
+        _ => !(2..square).any(|x| *n % x == 0),
     }
-
-    true
 }
