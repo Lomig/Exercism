@@ -1,3 +1,8 @@
+extern crate unicode_segmentation;
+use unicode_segmentation::UnicodeSegmentation;
+
 pub fn reverse(input: &str) -> String {
-    unimplemented!("Write a function to reverse {}", input);
+    // Non UTF8 / grapheme characters
+    // return input.chars().rev().collect();
+    return input.graphemes(true).rev().collect();
 }
