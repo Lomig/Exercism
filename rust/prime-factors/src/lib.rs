@@ -1,33 +1,24 @@
-pub fn factors(n: u64) -> Vec<u64> {
-    match n {
-        0 | 1 => vec![],
-        _ => {
-            let square = 1 + (n as f64).sqrt() as u64;
+pub fn factors(mut n: u64) -> Vec<u64> {
+    let mut factor_list = vec![];
+    let square = 1 + (n as f64).sqrt() as u64;
 
-            let (list_of_factors, remaining) = (2..=square)
-                .fold((vec![], n), |(factor_list, remaining), x| {
-                    add_factor(&factor_list, &remaining, &x)
-                });
+    let mut potential_factors = 2..;
+    let mut potential_factor = potential_factors.next().unwrap();
 
-            // if the number include a large prime,
-            // the square_root optimization prevents the function to catch it.
-            match remaining {
-                0 | 1 => list_of_factors,
-                _ => [list_of_factors, vec![remaining]].concat(),
-            }
+    // To speed up the algorithm, don't check for factors greater than the square root of n
+    // It can be a problem if the factors include a large prime
+    // We deal with that afterwards in a pattern match.
+    while potential_factor <= square {
+        while n % potential_factor == 0 {
+            factor_list.push(potential_factor);
+            n = n / potential_factor;
         }
-    }
-}
 
-fn add_factor(factor_list: &Vec<u64>, n: &u64, potential_factor: &u64) -> (Vec<u64>, u64) {
-    let mut current_factors = vec![];
-    let mut factor_list = factor_list.clone();
-    let mut remaining = *n;
-
-    while remaining % potential_factor == 0 {
-        current_factors.push(*potential_factor);
-        remaining = remaining / potential_factor;
+        potential_factor = potential_factors.next().unwrap();
     }
-    factor_list.extend(&current_factors);
-    (factor_list, remaining)
+
+    match n {
+        0 | 1 => factor_list,
+        _ => [factor_list, vec![n]].concat(),
+    }
 }
