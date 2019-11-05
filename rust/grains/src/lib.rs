@@ -6,5 +6,6 @@ pub fn square(s: u32) -> u64 {
 }
 
 pub fn total() -> u64 {
+    // Not expanding the equation avoid overflow problems
     1 + 2 * (2_u64.pow(63) - 1)
 }
