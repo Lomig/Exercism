@@ -1,6 +1,6 @@
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct Clock {
     hours: i32,
     minutes: i32,
@@ -11,7 +11,9 @@ impl Clock {
         Clock {
             hours: hours,
             minutes: minutes,
-        }.convert_minutes().convert_hours()
+        }
+        .convert_minutes()
+        .convert_hours()
     }
 
     pub fn add_minutes(mut self, minutes: i32) -> Self {
@@ -36,7 +38,6 @@ impl Clock {
 
         self
     }
-
 }
 
 impl fmt::Display for Clock {
@@ -46,11 +47,5 @@ impl fmt::Display for Clock {
         //   - Data aligned right
         //   - 2 caracters wide minimum
         write!(f, "{:0>2}:{:0>2}", self.hours, self.minutes)
-    }
-}
-
-impl PartialEq for Clock {
-    fn eq(&self, other: &Self) -> bool {
-        self.minutes == other.minutes && self.hours == other.hours
     }
 }
