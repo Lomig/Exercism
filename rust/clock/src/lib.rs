@@ -14,13 +14,8 @@ impl Clock {
         }
     }
 
-    pub fn add_minutes(mut self, minutes: i32) -> Self {
-        let new_minutes = self.minutes + minutes;
-
-        self.hours = (self.hours + new_minutes.div_euclid(60)).rem_euclid(24);
-        self.minutes = new_minutes.rem_euclid(60);
-
-        self
+    pub fn add_minutes(&self, minutes: i32) -> Self {
+        Clock::new(self.hours, self.minutes + minutes)
     }
 }
 
