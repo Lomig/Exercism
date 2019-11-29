@@ -9,16 +9,14 @@ class Matrix
   end
 
   def columns
-    (0..rows.first.count).inject([]) do |cols, i|
-      cols << rows.map { |row| row[i] }
-    end
+    rows.transpose
   end
 
   private
 
   def string_matrix_to_rows(matrix_as_string)
     matrix_as_string
-      .split("\n")
+      .lines
       .map { |x| x.split(" ").map(&:to_i) }
   end
 end
