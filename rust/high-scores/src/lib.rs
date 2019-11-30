@@ -21,18 +21,10 @@ impl<'a> HighScores<'a> {
     }
 
     pub fn personal_top_three(&self) -> Vec<u32> {
-        if self.scores.is_empty() {
-            return vec![];
-        }
-
-        let mut sorted_scores = self.scores.to_vec().clone();
-        sorted_scores.sort();
-        sorted_scores.reverse();
+        let mut sorted_scores = self.scores.to_vec();
+        sorted_scores.sort_by(|x, y| x.cmp(y).reverse());
+        sorted_scores.truncate(3);
 
         sorted_scores
-            .chunks(3)
-            .next()
-            .unwrap()
-            .to_vec()
     }
 }
