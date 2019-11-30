@@ -1,6 +1,7 @@
 /// "Encipher" with the Atbash cipher.
 pub fn encode(plain: &str) -> String {
     inverse_message(plain)
+        .collect::<Vec<char>>()
         .chunks(5)
         .fold(vec![], |result: Vec<String>, chunk| {
             [result, vec![chunk.into_iter().collect()]].concat()
@@ -10,13 +11,11 @@ pub fn encode(plain: &str) -> String {
 
 /// "Decipher" with the Atbash cipher.
 pub fn decode(cipher: &str) -> String {
-    inverse_message(cipher)
-        .into_iter()
-        .collect()
+    inverse_message(cipher).collect()
 }
 
 /// Utility function to inverse alphabet
-fn inverse_message(message: &str) -> Vec<char> {
+fn inverse_message(message: &str) -> impl Iterator<Item = char> {
     message
         .to_ascii_lowercase()
         .chars()
@@ -30,4 +29,5 @@ fn inverse_message(message: &str) -> Vec<char> {
             character
         })
         .collect::<Vec<char>>()
+        .into_iter()
 }
