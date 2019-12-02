@@ -15,9 +15,8 @@ class Series
   def slices(num)
     raise ArgumentError if num > series.count
 
-    series
-      .each_with_index
-      .map { |_, index| series[index, num] }
+    (0..series.count)
+      .each_with_object([]) { |index, result| result << series[index, num] }
       .select { |x| x.count == num }
       .map(&:join)
   end
