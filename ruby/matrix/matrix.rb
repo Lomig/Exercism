@@ -17,6 +17,6 @@ class Matrix
   def string_matrix_to_rows(matrix_as_string)
     matrix_as_string
       .lines
-      .map { |x| x.split(" ").map(&:to_i) }
+      .map { |x| x.split.map(&:to_i) }
   end
 end
