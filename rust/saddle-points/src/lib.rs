@@ -1,4 +1,5 @@
-/// Fin the saddle points of a given matrix
+/// Find the saddle points of a given matrix
+/// Iteration 2 — Discovering the Iter::all function
 pub fn find_saddle_points(input: &[Vec<u64>]) -> Vec<(usize, usize)> {
     if input.iter().flatten().collect::<Vec<&u64>>() == vec![] as Vec<&u64> {
         return vec![];
@@ -9,8 +10,9 @@ pub fn find_saddle_points(input: &[Vec<u64>]) -> Vec<(usize, usize)> {
             .into_iter()
             .enumerate()
             .fold(vec![], |row_result, (y, cell)| {
-                if row.into_iter().all(|value| { value <= cell }) &&
-                    input.into_iter().all(|line| { line[y] >= *cell }) {
+                if row.into_iter().all(|value| value <= cell)
+                    && input.into_iter().all(|line| line[y] >= *cell)
+                {
                     return [row_result, vec![(x, y)]].concat();
                 }
                 row_result
