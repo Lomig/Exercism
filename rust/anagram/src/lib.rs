@@ -11,27 +11,28 @@ pub fn anagrams_for<'a>(word: &str, possible_anagrams: &[&'a str]) -> HashSet<&'
 
     possible_anagrams
         .into_iter()
-        .fold(HashSet::new(), |mut result, possible_anagram| {
+        .filter_map(|possible_anagram| {
             if word.len() != possible_anagram.len() {
-                return result;
+                return None;
             };
             if lower(possible_anagram).eq(lower(word)) {
-                return result;
+                return None;
             };
 
             let mut current_lexicon = lexicon.clone();
 
-            lower(possible_anagram).for_each(|character| {
+            for character in lower(possible_anagram) {
                 let count = current_lexicon.entry(character).or_insert(0);
-                *count -= 1;
-            });
 
-            if current_lexicon.values().all(|x| *x == 0) {
-                result.insert(*possible_anagram);
+                if *count == 0 {
+                    return None;
+                }
+                *count -= 1;
             }
 
-            result
+            Some(*possible_anagram)
         })
+        .collect()
 }
 
 /// Return a lowercase String from any &str.
