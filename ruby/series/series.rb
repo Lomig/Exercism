@@ -16,7 +16,7 @@ class Series
     raise ArgumentError if num > series.count
 
     (0..series.count)
-      .each_with_object([]) { |index, result| result << series[index, num] }
+      .map.with_object([]) { |index, result| result << series[index, num] }
       .select { |x| x.count == num }
       .map(&:join)
   end
